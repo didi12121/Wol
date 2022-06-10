@@ -21,11 +21,10 @@ WiFiUDP Udp;
 //网卡唤醒端口(一般为9，可以在BIOS中查看)
 #define REMOTEPORT 9
 //PC端的IP地址（需要在路由器端进行MAC和IP绑定）
-const IPAddress remote_ip(192, 168, 2, 4);
+const IPAddress remote_ip(192, 168, 31, 174);
 //本地UDP端口
 #define LOCALPORT 9
 //网卡的MAC地址 6个字节
-//D8-BB-C1-A2-F8-41
 char NETCARD_MAC[6] = {0xD8, 0xBB, 0xC1, 0xA2, 0xF8, 0x41};
 //WOL包
 char WOL_Buffer[102];
@@ -86,40 +85,6 @@ void button1_callback(const String & state)
   }
 }
 
-
-//BlinkerButton Button2(BUTTON_2);
-//void button2_callback(const String & state)
-//{
-//    BLINKER_LOG("get button2 state: ", state);
-//
-//    if (state == BLINKER_CMD_BUTTON_TAP) {
-//    BLINKER_LOG("Button2 tap!");
-//    if(complete_flag){
-//      if(Ping.ping(remote_ip)){
-//        Blinker.notify("!PC Open Successful!");
-//        ping_num = 0;
-//        complete_flag = 0;
-//      }
-//      else{
-//        Blinker.notify("!Opening... Plase wait a moment");
-//        ping_num++;
-//        if(ping_num > 4){
-//          ping_num = 0;
-//          complete_flag = 0;
-//          Blinker.print("Open Failed,Plase tap button again!");
-//          Blinker.notify("!Open Failed,Plase tap button again");
-//        }
-//      }
-//    }
-//    else{
-//      Blinker.notify("!Plase tap button again!");
-//    }
-//  }
-//  else {
-//    BLINKER_LOG("Get user setting: ", state);
-//  }
-//}
-
 void dataRead(const String & data)
 {
   BLINKER_LOG("Blinker readString: ", data);
@@ -135,7 +100,6 @@ void setup()
   Blinker.begin(auth, ssid, pswd);
   Blinker.attachData(dataRead);
   Button1.attach(button1_callback);
-  //    Button2.attach(button2_callback);
   Udp.begin(LOCALPORT);
   WOL_packet_init();
 }
